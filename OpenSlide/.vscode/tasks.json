@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-opencv",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "teste_opencv.cpp",
+                "-IC:/msys64/mingw64/include",
+                "-IC:/msys64/mingw64/include/opencv4",
+                "-LC:/msys64/mingw64/lib",
+                "-lopencv_core",
+                "-lopencv_imgproc",
+                "-lopencv_highgui",
+                "-lopencv_imgcodecs",
+                "-o",
+                "main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
