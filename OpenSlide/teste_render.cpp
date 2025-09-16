@@ -29,15 +29,15 @@ int main() {
         openslide_get_level_dimensions(slide, level, &w, &h);
         std::cout << "Nível " << level << ": " << w << "x" << h << std::endl;
         
-        // Pular níveis muito grandes
+        // // Pular níveis muito grandes
         // if (w > 50000 || h > 50000) {
         //     std::cout << "  -> Pulando (muito grande)" << std::endl;
         //     continue;
         // }
         
         // Testar uma pequena região
-        int width = 12000;
-        int height = 12000;        
+        int width = 512;
+        int height = 512;        
         // Várias posições para testar
         std::vector<std::pair<int64_t, int64_t>> positions = {
             {w/4, h/4},     // Quadrante 1
@@ -51,6 +51,8 @@ int main() {
         for (size_t pos = 0; pos < positions.size(); pos++) {
             int64_t x = std::min(positions[pos].first, w - width);
             int64_t y = std::min(positions[pos].second, h - height);
+            
+            std::cout << "x: " << positions[pos].first << "|" << w << '-' << width << " y: " << positions[pos].second << "|" << h << '-' << height;
             
             std::vector<uint32_t> buffer(width * height, 0);
             openslide_read_region(slide, buffer.data(), x, y, level, width, height);
@@ -85,6 +87,7 @@ int main() {
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
                         uint32_t pixel = buffer[i * width + j];
+                        std::cout << pixel << std::endl;
                         uint8_t a = (pixel >> 24) & 0xFF;
                         uint8_t r = (pixel >> 16) & 0xFF;
                         uint8_t g = (pixel >> 8) & 0xFF;
