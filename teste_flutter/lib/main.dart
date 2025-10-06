@@ -58,18 +58,16 @@ class _ImageCanvasState extends State<ImageCanvas> {
             key: _areaKey,    
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Row(
               children: [
-                const Text('coordenadas locais'),
-                Text('Coordenadas: x: $boxX, y: $boxY'),
-                const SizedBox(height: 6)
+                Column(children: [Image.asset('assets/001/level0/63_221.jpg', scale: 1.6), Image.asset('assets/001/level0/63_222.jpg', scale: 1.6)]), 
+                Column(children: [Image.asset('assets/001/level0/64_221.jpg', scale: 1.6), Image.asset('assets/001/level0/64_222.jpg', scale: 1.6)],),
+                Column(children: [Image.asset('assets/001/level0/65_221.jpg', scale: 1.6), Image.asset('assets/001/level0/65_222.jpg', scale: 1.6)],),
               ],
+              )
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

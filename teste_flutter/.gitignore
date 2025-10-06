@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Imagens dentro de assets, para evitar duplicação delas, as imagens estão em Openslide/tiles
+assets/*
