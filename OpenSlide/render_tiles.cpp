@@ -146,10 +146,12 @@ int main() {
                     // Define o diretório de saída final
                     fs::path out_dir = out_root/ file_dir / level_dir;
                     fs::create_directories(out_dir);
-                    fs::path out_file = out_root/ file_dir / level_dir / fmt::format("{}_{}.jpg", x, y);
+                    fs::path out_file_LQ = out_root/ file_dir / level_dir / fmt::format("{}_{}_LQ.jpg", x, y);
+                    fs::path out_file_HQ = out_root/ file_dir / level_dir / fmt::format("{}_{}_HQ.jpg", x, y);
                     
                     // Salva o arquivo da imagem
-                    cv::imwrite(out_file.string(), out_bgr, {cv::IMWRITE_JPEG_QUALITY, 90});
+                    cv::imwrite(out_file_LQ.string(), out_bgr, {cv::IMWRITE_JPEG_QUALITY, 5});
+                    cv::imwrite(out_file_HQ.string(), out_bgr, {cv::IMWRITE_JPEG_QUALITY, 90});
                 } else {
                     std::cout << "Nível " << current_level << ": " << "tile " << x << "_" << y << " --> invalido\n"; // Para debug
                 }
