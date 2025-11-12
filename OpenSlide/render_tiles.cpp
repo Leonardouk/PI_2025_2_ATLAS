@@ -51,7 +51,7 @@ int main() {
     }
 
     // Checa se existe diretório para tiles e o cria se necessáo
-    fs::path out_root = fs::path("tiles");
+    fs::path out_root = fs::path(std::getenv("USERPROFILE")) / "Documents" / "tiles";
 
     // Checa se existe diretório referente ao arquivo sendo lido e cria se necessário
     fs::path file_dir = fmt::format("{}", file);
@@ -72,7 +72,7 @@ int main() {
         // Essas variáveis determinam o tamanho em tiles dos dois eixos da imagem
         int tiles_x = (level_width + tile_size - 1) / tile_size;
         int tiles_y = (level_height + tile_size - 1) / tile_size;
-
+        
         // Impressão para debug  
         // std::cout << "Nível " << current_level << std::endl;
         // std::cout << "Largura do nível: " << level_width << " | Altura do nível: " << level_height << std::endl;
@@ -80,7 +80,8 @@ int main() {
         
         // Conferindo o downsample, quantos pixels em nível 0 corresponde no nível atual
         double downsample = openslide_get_level_downsample(slide, current_level);
-
+        
+        std::cout << "Level " << current_level << ": " << level_width << " x " << level_height << " (downsample: " << downsample << ")" << std::endl;
         // Reserva espaço no buffer para armazenar tiles
         std::vector<uint32_t> buffer; 
         buffer.reserve(tile_size * tile_size); // tamanho do buffer é exatamente quantos pixels existem em um tile
@@ -147,11 +148,11 @@ int main() {
                     fs::path out_dir = out_root/ file_dir / level_dir;
                     fs::create_directories(out_dir);
                     fs::path out_file_LQ = out_root/ file_dir / level_dir / fmt::format("{}_{}_LQ.jpg", x, y);
-                    fs::path out_file_HQ = out_root/ file_dir / level_dir / fmt::format("{}_{}_HQ.jpg", x, y);
+                    fs::path out_file_HQ = out_root/ file_dir / level_dir / fmt::format("{}_{}_HQ.png", x, y);
                     
                     // Salva o arquivo da imagem
                     cv::imwrite(out_file_LQ.string(), out_bgr, {cv::IMWRITE_JPEG_QUALITY, 5});
-                    cv::imwrite(out_file_HQ.string(), out_bgr, {cv::IMWRITE_JPEG_QUALITY, 90});
+                    cv::imwrite(out_file_HQ.string(), out_bgr, {cv::IMWRITE_PNG_COMPRESSION, 9});
                 } else {
                     std::cout << "Nível " << current_level << ": " << "tile " << x << "_" << y << " --> invalido\n"; // Para debug
                 }
